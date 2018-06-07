@@ -1,0 +1,52 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
+<link rel="import" href="catalog-item.html">
+
+<dom-module id="catalog-item-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      
+      .container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 10px;
+      }
+      
+      @media(min-width: 768px) {
+        .container {
+          grid-template-columns: repeat(12, 1fr);
+        }
+      }
+      
+      .container > catalog-item {
+        grid-column-end: span 4;
+      }
+    </style>
+    <div class="container">
+      <template is="dom-repeat" items="[[items]]">
+        <catalog-item add-item-url="[[addItemUrl]]" user="[[user]]" item="[[item]]" class="item"></catalog-item>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    class CatalogItemList extends Polymer.Element {
+      static get is() { return 'catalog-item-list'; }
+      static get properties() {
+        return {
+          addItemUrl: String,
+          user: String,
+          items: Array
+        };
+      }
+    }
+
+    window.customElements.define(CatalogItemList.is, CatalogItemList);
+  </script>
+</dom-module>

@@ -1,0 +1,36 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="catalog-search.html">
+<link rel="import" href="catalog-item-list.html">
+<link rel="import" href="cart-ajax.html">
+<link rel="import" href="cart-badge.html">
+
+<dom-module id="catalog-demo">
+  <template>
+    <cart-ajax url="/carts" user="[[user]]" cart-items="{{cartItems}}"></cart-ajax>
+    <cart-badge cart-items="[[cartItems]]"></cart-badge>
+    <catalog-search url="/items" items="{{items}}"></catalog-search>
+    <catalog-item-list add-item-url="/carts" user="[[user]]" items="[[items]]"></catalog-item-list>
+  </template>
+  <script>
+  /**
+   * @customElement
+   * @polymer
+   */
+  class CatalogDemo extends Polymer.Element {
+    static get is() { return 'catalog-demo'; }
+    static get properties() {
+      return {
+        user: {
+          type: String,
+          value: "punkstarman"
+        },
+        items: Array,
+        cartItems: Array
+      };
+    }
+  }
+  
+  window.customElements.define(CatalogDemo.is, CatalogDemo);
+  </script>
+</dom-module>

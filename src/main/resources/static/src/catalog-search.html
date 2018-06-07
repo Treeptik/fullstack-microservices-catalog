@@ -1,0 +1,40 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
+<dom-module id="catalog-search">
+  <template>
+    <iron-ajax auto url="[[url]]" params="" handle-as="json" on-response="handleResponse"></iron-ajax>
+    
+    <paper-input placeholder="Search"></paper-input><paper-icon-button icon="icons:search"></paper-icon-button>
+  </template>
+  <script>
+  class CatalogSearch extends Polymer.Element {
+    static get is() { return 'catalog-search'; }
+    static get properties() {
+      return {
+        items: {
+          type: Array,
+          value: [],
+          notify: true
+        },
+        url: String
+      };
+    }
+    
+    handleResponse(event) {
+      var response = event.detail.response;
+      if ('_embedded' in response) {
+        this.items = response._embedded.items;
+      } else {
+        this.items = [];
+      }
+    }
+  }
+  
+  window.customElements.define(CatalogSearch.is, CatalogSearch);
+  </script>
+</dom-module>

@@ -1,0 +1,41 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="cart-add-item.html">
+
+<dom-module id="cart-demo">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <paper-input label="User" value="{{user}}"></paper-input>
+    <paper-input label="Item" value="{{itemRef}}"></paper-input>
+    <cart-add-item url="/carts" user="{{user}}" item-ref="{{itemRef}}"></cart-add-item>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class CartDemo extends Polymer.Element {
+      static get is() { return 'cart-demo'; }
+      static get properties() {
+        return {
+          user: {
+            type: String,
+            value: "punkstarman"
+          },
+          itemRef: {
+            type: String,
+            value: "1"
+          }
+        };
+      }
+    }
+
+    window.customElements.define(CartDemo.is, CartDemo);
+  </script>
+</dom-module>

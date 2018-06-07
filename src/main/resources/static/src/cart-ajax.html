@@ -1,0 +1,61 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="cart-ajax">
+  <template>
+    <iron-ajax id="getItemsRequest"
+      url="{{_url(url, user)}}"
+      handle-as="json"
+      on-response="handleResponse"></iron-ajax>
+  </template>
+  <script>
+  class CartAjax extends Polymer.Element {
+    static get is() { return 'cart-ajax'; }
+    
+    static get properties() {
+      return {
+        url: String,
+        user: String,
+        cartItems: {
+          type: Array,
+          value: [],
+          notify: true
+        }
+      };
+    }
+    
+    _url(url, user) {
+      return url + "/" + user + "/items";
+    }
+    
+    ready() {
+      super.ready();
+      
+      this.scheduleRequest(10);
+    }
+    
+    scheduleRequest(delay) {
+    	var element = this;
+        setTimeout(function() { element.generateRequest(); }, delay);
+    }
+    
+    generateRequest() {
+      this.$.getItemsRequest.generateRequest();
+      
+      this.scheduleRequest(1000);
+    }
+    
+    handleResponse(event) {
+      var response = event.detail.response;
+      if ('_embedded' in response) {
+        this.cartItems = response._embedded.items;
+      } else {
+        this.cartItems = [];
+      }
+    }
+  }
+  
+  window.customElements.define(CartAjax.is, CartAjax);
+  </script>
+</dom-module>

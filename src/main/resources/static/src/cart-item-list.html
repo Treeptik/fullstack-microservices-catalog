@@ -1,0 +1,36 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="cart-item.html">
+
+<dom-module id="cart-item-list">
+  <template>
+    <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    </style>
+    
+    <div class="container">
+      <template is="dom-repeat" items="[[cartItems]]">
+        <cart-item item="[[item]]"></cart-item>
+      </template>
+    </div>
+    <slot></slot>
+  </template>
+  <script>
+  class CartItemList extends Polymer.Element {
+    static get is() { return 'cart-item-list'; }
+    
+    static get properties() {
+      return {
+        cartItems: Array
+      };
+    }
+  }
+  
+  window.customElements.define(CartItemList.is, CartItemList);
+  </script>
+</dom-module>

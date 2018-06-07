@@ -1,0 +1,61 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+
+<dom-module id="cart-add-item">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        align-items: center;
+      }
+      
+      paper-input {
+        flex: 0 0 50px;
+      }
+    </style>
+    <iron-ajax id="addRequest"
+      url="[[_addUrl(url, user)]]"
+      method="POST"
+      body="[[_body(item, quantity)]]"
+      content-type="application/json"></iron-ajax>
+    <paper-input label="Quantity" value="{{quantity}}"></paper-input>
+    <paper-icon-button icon="icons:add" on-click="addItem"></paper-icon-button>
+  </template>
+  <script>
+  class CartAddItem extends Polymer.Element {
+    static get is() { return 'cart-add-item'; }
+    static get properties() {
+      return {
+        url: String,
+        user: String,
+        item: Object,
+        quantity: {
+          type: Number,
+          value: 1
+        }
+      };
+    }
+    
+    _addUrl(url, user) {
+      return url + "/" + user + "/items";
+    }
+    
+    _body(item, quantity) {
+      return {
+        item: item,
+        quantity: quantity
+      };
+    }
+    
+    addItem() {
+      this.$.addRequest.generateRequest();
+    }
+  }
+  
+  window.customElements.define(CartAddItem.is, CartAddItem);
+  </script>
+</dom-module>

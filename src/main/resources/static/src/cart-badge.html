@@ -1,0 +1,30 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-badge/paper-badge.html">
+
+<dom-module id="cart-badge">
+  <template>
+    <paper-icon-button icon="icons:shopping-cart"></paper-icon-button>
+    <paper-badge label="[[_itemCount(cartItems)]]"></paper-badge>
+  </template>
+  <script>
+  class CartBadge extends Polymer.Element {
+    static get is() { return 'cart-badge'; }
+    
+    static get properties() {
+      return {
+    	cartItems: Array,
+      };
+    }
+    
+    _itemCount(items) {
+      return items.length;
+    }
+  }
+  
+  window.customElements.define(CartBadge.is, CartBadge);
+  </script>
+</dom-module>

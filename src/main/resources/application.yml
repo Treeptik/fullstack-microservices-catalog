@@ -1,0 +1,21 @@
+spring:
+  liquibase:
+    change-log: classpath:db/db.changelog-master.xml
+  jpa:
+    properties:
+      hibernate.temp.use_jdbc_metadata_defaults: false
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+---
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:postgresql://localhost/catalog
+    username: user
+    password: pwd
+#  liquibase:
+#    enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: validate
+server:
+  port: 8081

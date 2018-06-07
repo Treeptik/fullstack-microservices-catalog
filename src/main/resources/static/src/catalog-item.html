@@ -1,0 +1,56 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+
+<link rel="import" href="cart-add-item.html">
+
+<dom-module id="catalog-item">
+  <template>
+    <style>
+    .catalog-item-header {
+      @apply --paper-font-headline;
+    }
+    .catalog-item-description {
+      color: var(--paper-grey-600)
+    }
+    paper-card {
+      width: 100%;
+    }
+    </style>
+    <paper-card>
+      <div class="card-content">
+        <div class="catalog-item-header">[[item.name]]</div>
+        <p>[[_format(item.price)]]&nbsp;€</p>
+        <p class="catalog-item-description">[[item.description]]</p>
+      </div>
+      <div class="card-actions">
+        <cart-add-item url="[[addItemUrl]]" user="[[user]]" item="[[item]]"></cart-add-item>
+      </div>
+    </paper-card>
+  </template>
+  <script>
+  class CatalogItem extends Polymer.Element {
+    static get is() { return 'catalog-item'; }
+    static get properties() {
+      return {
+        addItemUrl: String,
+        user: String,
+        item: Object,
+        numberFormat: {
+          type: Object,
+          readonly: true,
+          value: function() {
+            return new Intl.NumberFormat('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+          }
+        }
+      };
+    }
+    
+    _format(x) {
+      return this.numberFormat.format(x);
+    }
+  }
+  
+  window.customElements.define(CatalogItem.is, CatalogItem);
+  </script>
+</dom-module>

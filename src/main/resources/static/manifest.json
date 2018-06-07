@@ -1,0 +1,7 @@
+{
+  "name": "catalog",
+  "short_name": "catalog",
+  "description": "Elements for querying and displaying a catalog of items",
+  "start_url": "/",
+  "display": "standalone"
+}
